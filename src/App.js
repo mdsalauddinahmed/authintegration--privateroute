@@ -15,11 +15,11 @@ function App() {
       element: <Main></Main>,
       children:[{
         path:'/',
-        element:<Home></Home>
+        element:<PrivateRoute><Home></Home></PrivateRoute>
       },
       {
        path:'/orders',
-       element:<Orders></Orders>
+       element:<PrivateRoute><Orders></Orders></PrivateRoute>
       },
       {
         path:'/login',
