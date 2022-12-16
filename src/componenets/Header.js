@@ -3,8 +3,15 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../constexts/UserContext';
 
 const Header = () => {
-    const {user} =useContext(AuthContext);
+    const {user,logOut} =useContext(AuthContext);
     console.log("context",user)
+
+    const handleSignOut=()=>{
+        logOut()
+        .then(()=>{
+
+        }).catch(error =>console.error(error))
+    }
     return (
         <>
          <div className="navbar bg-primary text-primary-content">
@@ -12,7 +19,8 @@ const Header = () => {
              <Link className="btn btn-ghost normal-case text-xl" to ='/'>Home</Link>
              <Link className="btn btn-ghost normal-case text-xl" to ='/login'>Log In</Link>
              <Link className="btn btn-ghost normal-case text-xl" to ='/register'>Register</Link>
-             {user?.displayName && <span> Welcome,to {user.displayName}</span>}
+             {user?.email && <span> Welcome,to {user.email}</span>}
+             <button onClick={handleSignOut} className="btn btn-ghost normal-case  text-xl btn-sm">Logout</button>
           </div>
         </>
     );

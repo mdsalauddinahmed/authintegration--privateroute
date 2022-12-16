@@ -1,15 +1,35 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../constexts/UserContext';
 
 const Register = () => {
-    const handleSubmit = e=>{
+    const{createUser,signInWithGoogle}=useContext(AuthContext)
+     const handleSubmit = e=>{
         e.preventDefault();
         const form =e.target;
         const name =form.name.value;
         const email =form.email.value;
         const password =form.password.value;
-        console.log(name,email,password)
+        console.log(name,email,password);
+        createUser(email,password)
+        .then(result =>{
+            const user =result.user;
+            console.log('registered user', user)
+            form.reset();
+        })
+        .catch(error =>{
+            console.error(error)
+        })
       }
+      const handleSignInGoogle =()=>{
+        signInWithGoogle()
+        .then(result =>{
+            const user =result.user;
+            console.log(user);
+        }).catch(error =>console.error(error))
+      }
+
+      
       return (
           <div>
             <div className="hero min-h-screen bg-base-200">
@@ -48,6 +68,7 @@ const Register = () => {
             <button className="btn btn-primary">Register</button>
           </div>
         </form>
+        <button onClick={handleSignInGoogle} className="btn btn-success">Google</button>
       </div>
     </div>
   </div>
